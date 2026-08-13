@@ -725,6 +725,34 @@ body.light-mode .project-description {
     color: #555;
 }
 
+/* =========================
+   MOBILE / SMALL SCREENS
+   Stack panels vertically and prevent horizontal scrolling
+========================= */
+@media (max-width: 900px) {
+    html, body { overflow-x: hidden; }
+    body.dark-mode .dashboard, body.light-mode .dashboard {
+        display: block; /* stack panels vertically */
+        background: transparent;
+        border: none;
+    }
+    .site { padding-left: 12px; padding-right: 12px; }
+    .dashboard > .panel { margin-bottom: 14px; }
+    .about-content { display: block; gap: 12px; }
+    .discord-card { display: flex; flex-direction: row; gap: 12px; }
+    .discord-avatar { width: 52px; height: 52px; }
+    .project { height: auto; }
+}
+
+@media (max-width: 480px) {
+    body { padding: 8px; }
+    .panel { padding: 12px; border-radius: 6px; }
+    .project { height: auto; }
+    .info { grid-template-columns: 80px 1fr; }
+    .username { width: auto; padding-bottom: 6px; }
+    nav { flex-wrap: wrap; gap: 12px; justify-content: center; }
+}
+
 body.dark-mode .project-arrow {
     position: absolute;
     right: 10px;

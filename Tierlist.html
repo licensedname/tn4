@@ -59,6 +59,27 @@
 
     /* responsive */
     @media (max-width:900px){main{grid-template-columns:1fr;}.legend{order:2}.tiers{order:1}}
+    @media (max-width:700px){
+      body{overflow:auto}
+      .wrap{padding:12px;margin:8px}
+      .big-letter{width:56px;height:56px;font-size:32px}
+      .title{font-size:16px}
+      .subtitle{font-size:12px}
+      .tags{gap:6px}
+      .tiers{gap:10px}
+      .tier{grid-template-columns:1fr;gap:10px;padding:10px}
+      .tier-label{padding:6px 8px;border-right:none;border-bottom:1px dashed rgba(255,255,255,0.03)}
+      .tier-body{min-height:80px;gap:10px}
+      .user{width:120px;padding:10px}
+      .avatar{width:64px;height:64px}
+      .uname{font-size:13px}
+    }
+    @media (max-width:420px){
+      .user{width:100px}
+      .avatar{width:56px;height:56px}
+      .big-letter{width:48px;height:48px;font-size:28px}
+      .wrap{margin:6px;padding:10px}
+    }
   </style>
 </head>
 <body>
