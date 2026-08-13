@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>portfolio.dev</title>
+    <style>
+        /* Inline defaults retained in HTML (will be overridden by styles.css theme rules) */
+        * { box-sizing: border-box; }
+        a { color: inherit; text-decoration: none; }
+        a:hover { color: white; }
+        button {
+            background: #080808;
+            color: white;
+            border: 1px solid #555;
+            padding: 6px 9px;
+            opacity: 1;
+            transition: opacity 0.15s ease;
+        }
+        button:hover { opacity: 0.5; cursor: pointer; }
+        .logo { border: 1px solid #555; padding: 6px 9px; color: white; font-weight: bold; background: #080808; }
+        .logo::before { content: "$ "; color: #888; }
+    </style>
+    <link rel="stylesheet" href="styles.css">
+    <script src="app.Js"></script>
+</head>
+
+
+<body>
+
+<div class="site">
+
+    <!-- =========================
+         HEADER
+    ========================== -->
+
+    <header>
+
+        <div class="logo">
+            portfolio.dev
+        </div>
+
+        <nav>
+            <button id="themes">Mode</button>
+
+            <a href="index.html">home</a>
+            <a href="Blog.html">blog</a>
+            <a href="https://discord.gg/ZWKD9WpZTc" target = "_blank">Portfolio</a>
+            <a href="https://namedsheep.straw.page" target="_blank">strawpage</a>
+        </nav>
+
+    </header>
+
+
+    <!-- =========================
+         DASHBOARD
+    ========================== -->
+
+    <main class="dashboard">
+
+
+        <!-- ABOUT -->
+
+        <section class="panel about">
+
+            <div class="panel-title">
+                0: ~/about
+            </div>
+
+            <div class="about-content">
+
+                <div class="ascii">
+(\_/)
+(•_•)
+(>🧨
+                </div>
+
+                <div class="profile">
+
+                    <div class="username">
+                        Thalia
+                    </div>
+
+                    <div class="info">
+
+                        <div class="info-label">os</div>
+                        <div class="info-value">
+                            Windows 11 x86_64
+                        </div>
+
+                        
+                        <div class="info-label">Mindset</div>
+                        <div class="info-value">
+                            INSANE JARVIS
+                        </div>
+                        
+
+                        <div class="info-label">money</div>
+                        <div class="info-value">
+                            big as hell
+                        </div>
+
+                        <div class="info-label">editor</div>
+                        <div class="info-value">
+                            vscode
+                        </div>
+
+                        <div class="info-label">uptime</div>
+                        <div class="info-value">
+                            6months animating
+                        </div>
+
+                        <div class="info-label">stack</div>
+                        <div class="info-value">
+                            NOTHING started html and css today
+                        </div>
+
+                        <div class="info-label">active</div>
+                        <div class="info-value">
+                            NONE they dont even count as langs
+                        </div>
+
+                        <div class="info-label">timezone</div>
+                        <div class="info-value">
+                            Gmt/ Gmt+1
+                        </div>
+
+                    </div>
+
+
+                    
+
+
+                    <div class="freelance">
+                       open to commisions →
+                        <a href="mailto:wchxmistry@gmail.com">
+                            wchxmistry@gmail.com
+                        </a>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- DISCORD -->
+
+        <section class="panel discord">
+
+            <div class="panel-title">
+                1: ~/discord/presence
+            </div>
+
+            <div class="discord-user">
+
+                @namedsheep
+
+                <span class="status">
+                    Do Not Disturb
+                </span>
+
+            </div>
+
+            <div class="discord-card">
+
+                <div class="discord-avatar">
+                     <img
+                    class="project-image"
+                    src="https://media.discordapp.net/attachments/1465850439236059392/1535551168921477230/IMG_1370.png?ex=6a7e1bb7&is=6a7cca37&hm=4d5f93034470d2efda0dea4527d030ed0c4c26898efbe18a639615dcbed7c7cb&=&format=webp&quality=lossless&width=1024&height=1024"
+                    alt="Project"
+                >
+                    
+                </div>
+
+                <div class="discord-info">
+
+                    <div class="activity">
+                        building something cool
+                    </div>
+
+                    <div class="activity-description">
+                        currently doing animation commisions freelance
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="no-activity">
+                Im sitting playing JJS right now or im in blender animating
+            </div>
+
+        </section>
+
+
+
+        <!-- LANGUAGE STATS -->
+
+        <section class="panel languages">
+
+            <div class="panel-title">
+                2: ~/coding/totals
+            </div>
+
+
+            <div class="language">
+
+                <div class="language-name">
+                    Blender
+                </div>
+
+                <div class="bar">
+                    <div
+                        class="bar-fill"
+                        style="width: 92%;">
+                    </div>
+                </div>
+
+                <div class="hours">
+                    205h
+                </div>
+
+            </div>
+
+
+            <div class="language">
+
+                <div class="language-name">
+                    .lua
+                </div>
+
+                <div class="bar">
+                    <div
+                        class="bar-fill"
+                        style="width: 48%;">
+                    </div>
+                </div>
+
+                <div class="hours">
+                    30h
+                </div>
+
+            </div>
+
+
+            <div class="language">
+
+                <div class="language-name">
+                    html + css
+                </div>
+
+                <div class="bar">
+                    <div
+                        class="bar-fill"
+                        style="width: 32%;">
+                    </div>
+                </div>
+
+                <div class="hours">
+                    2h
+                </div>
+
+            </div>
+
+
+            
+
+
+            
+
+            <div class="total">
+
+                <span>
+                    total
+                </span>
+
+                <strong>
+                    237hrs total spent creating
+                </strong>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- FEATURED PROJECT -->
+
+        <section class="panel projects">
+
+            <div class="panel-title">
+                3: ~/projects/featured
+            </div>
+
+            <div class="project">
+
+                <!-- Replace this URL with your own image -->
+                <img
+                    class="project-image"
+                    src="https://media.discordapp.net/attachments/1465850439236059392/1535551168921477230/IMG_1370.png?ex=6a7e1bb7&is=6a7cca37&hm=4d5f93034470d2efda0dea4527d030ed0c4c26898efbe18a639615dcbed7c7cb&=&format=webp&quality=lossless&width=1024&height=1024"
+                    alt="Project"
+                >
+
+                <div class="project-overlay">
+
+                    <div class="project-name">
+                        project.exe
+                    </div>
+
+                    <div class="project-description">
+                        recreation of ihamirus web project
+                    </div>
+
+                </div>
+
+                <a href="#" class="project-arrow">
+                    -_-
+                </a>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- BLOG -->
+
+        <section class="panel blog">
+
+            <div class="panel-title">
+                4: ~/blog/recent
+            </div>
+
+            <div class="blog-title">
+                Learning FrontEnd development
+            </div>
+
+            <div class="blog-meta">
+                2026.08.12
+            </div>
+
+            <div class="blog-description">
+                This is a recreation of ihamirus portfolio website 
+                this currently involves nothing else but html and css
+                but it's for the sake of practice and further improvement.
+                creds to @ihamiru this is just a straight copy but worse
+            </div>
+
+        </section>
+
+
+
+        <!-- NOW -->
+
+        <section class="panel now">
+
+            <div class="panel-title">
+                5: ~/now
+            </div>
+
+            <div class="now-item">
+                building <span>A web portal</span>
+            </div>
+
+            <div class="now-item">
+                learning <span>html, CSS, JS</span>
+            </div>
+
+            <div class="now-item">
+                currently <span>Animation commissions </span>
+            </div>
+
+        </section>
+
+
+    </main>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,119 @@
+/* css/style.css
+   Cinematic front display for "CCC Divine Intellect"
+   - Background video + overlay
+   - Logo, divider, title, description
+   - Compass navigation
+   - Top-right logout + sound toggle
+*/
+
+:root{
+  --accent: #4fe1ff; /* subtle cyan */
+  --muted: rgba(255,255,255,0.08);
+  --thin: 1px;
+}
+
+/* Base reset */
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  background:#000; /* fallback if video fails */
+  color:#fff;
+  font-family: "Courier New", monospace;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  overflow:hidden;
+}
+
+/* Background video */
+.bg-video{
+  position:fixed;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2;
+  transform:scale(1.02);
+}
+
+/* Overlay to keep contrast */
+.bg-overlay{
+  position:fixed;inset:0;background:rgba(2,2,2,0.55);backdrop-filter:blur(1px);z-index:-1;
+}
+
+/* Top-right controls */
+.top-controls{
+  position:fixed;top:24px;right:28px;display:flex;gap:12px;align-items:center;z-index:30;
+}
+.btn-ghost{
+  background:transparent;border:var(--thin) solid rgba(255,255,255,0.18);color:#fff;padding:8px 12px;font-size:12px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;
+}
+.btn-ghost:hover{border-color:rgba(79,225,255,0.6);color:var(--accent)}
+
+/* Main centered content */
+.center-wrap{
+  position:relative;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:48px 20px;z-index:10;
+  opacity:0;transform:translateY(6px);animation:contentIn 900ms ease forwards 220ms;
+}
+@keyframes contentIn{to{opacity:1;transform:none}}
+
+.main-title{font-weight:400;font-size:clamp(28px,6vw,72px);letter-spacing:6px;text-transform:uppercase;color:#fff;margin:8px 0;display:inline-block;transform:translateX(-3vw)}
+.main-title .accent-green{display:inline-block;transform:translateX(1.6vw)}
+.main-title .accent{color:var(--accent)}
+.accent-green{color:#55ff88}
+
+.description{max-width:980px;margin:12px auto;color:rgba(255,255,255,0.65);font-size:12px;letter-spacing:3px;text-transform:uppercase;line-height:1.6}
+
+/* Compass */
+.compass-wrap{position:absolute;left:50%;top:48%;transform:translate(-50%,-55%);width:90vmin;height:90vmin;max-width:1200px;max-height:1200px;margin:0;display:flex;align-items:center;justify-content:center;opacity:0;animation:compassIn 1000ms ease forwards 520ms;z-index:5}
+@keyframes compassIn{to{opacity:1}}
+
+.compass-center{position:absolute;display:flex;align-items:center;justify-content:center;pointer-events:none;z-index:6}
+.compass-circle{width:36%;height:36%;min-width:200px;min-height:120px;border-radius:12px;border:none;box-shadow:none;backdrop-filter:none;background:transparent}
+
+/* Arms originate from the central box and extend outward without overlapping letters */
+.arm{position:absolute;background:rgba(255,255,255,0.06);z-index:2}
+.arm-n{left:50%;top:50%;width:2px;height:calc(50% - 18%);transform:translateX(-50%) translateY(-100%)}
+.arm-s{left:50%;top:50%;width:2px;height:calc(50% - 18%);transform:translateX(-50%)}
+.arm-e{left:50%;top:50%;height:2px;width:calc(50% - 18%);transform:translateY(-50%)}
+.arm-w{left:50%;top:50%;height:2px;width:calc(50% - 18%);transform:translateX(-100%) translateY(-50%)}
+
+.dir{position:absolute;display:flex;align-items:center;justify-content:center;width:20%;height:20%;border-radius:6px;color:#fff;font-weight:500;text-decoration:none;letter-spacing:2px;transition:all 140ms ease, transform 140ms ease;background:transparent;border:none;font-size:clamp(20px,8vw,100px);opacity:0.5;z-index:7;transform-origin:center}
+.dir:active{transform:scale(0.98)}
+
+.dir-n{top:1.5%;left:50%;transform:translateX(-50%);}
+.dir-e{right:0.8%;top:50%;transform:translateY(-50%);} /* east on the right */
+.dir-s{bottom:1.5%;left:50%;transform:translateX(-50%);}
+.dir-w{left:0.8%;top:50%;transform:translateY(-50%);} /* west on the left */
+
+/* make the clickable zones larger but visually minimal */
+.dir::after{content:'';position:absolute;inset:0;border-radius:6px;box-shadow:0 0 24px rgba(79,225,255,0);pointer-events:none}
+
+.dir:hover{color:var(--accent);opacity:1;background:rgba(255,255,255,0.03);box-shadow:0 0 48px rgba(79,225,255,0.06)}
+.dir:focus{opacity:1;background:rgba(255,255,255,0.03);} 
+
+/* preserve translate when scaling so elements don't jump */
+.dir-n:hover{transform:translateX(-50%) scale(1.02)}
+.dir-s:hover{transform:translateX(-50%) scale(1.02)}
+.dir-e:hover{transform:translateY(-50%) scale(1.02)}
+.dir-w:hover{transform:translateY(-50%) scale(1.02)}
+.dir:focus{opacity:1;background:rgba(255,255,255,0.03);}
+
+/* arrowheads removed for cleaner compass letters */
+
+/* Footer */
+.site-footer{position:fixed;left:50%;transform:translateX(-50%);bottom:18px;color:rgba(255,255,255,0.35);font-size:12px;letter-spacing:2px;z-index:20}
+.site-footer a{color:inherit;text-decoration:underline;opacity:0.9}
+
+/* Responsive tuning */
+@media (max-width:900px){
+  .main-title{font-size:clamp(22px,5.2vw,48px);transform:translateX(-2vw);letter-spacing:5px}
+  .compass-wrap{width:84vmin;height:84vmin}
+}
+@media (max-width:520px){
+  .main-title{font-size:20px;letter-spacing:4px;transform:none}
+  .main-title .accent-green{transform:none}
+  .description{font-size:11px;letter-spacing:2px}
+  .compass-wrap{width:96vmin;height:96vmin}
+  .dir{width:36%;height:36%}
+}
+
+/* accessibility: focus styles */
+.dir:focus{outline:2px solid rgba(79,225,255,0.16);outline-offset:6px}
+
+/* Small touches */
+a{color:inherit}

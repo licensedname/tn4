@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Custom Tierlist — Discord Ranks</title>
+  <style>
+    :root{--bg:#060607;--panel:#0d0f10;--muted:#98a0a6;--border:rgba(255,255,255,0.06)}
+    /* background media removed (audio-only) */
+    *{box-sizing:border-box}
+    body{margin:0;background:linear-gradient(180deg,#050507 0%, #0a0b0c 100%);color:#e6eef6;font-family:"Courier New", monospace;min-height:100vh}
+    .wrap{max-width:1200px;margin:32px auto;padding:24px}
+
+    header.app{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+    .brand{display:flex;align-items:center;gap:18px}
+    .big-letter{width:72px;height:72px;border-radius:12px;background:rgba(255,255,255,0.02);display:flex;align-items:center;justify-content:center;font-size:40px;font-weight:500;letter-spacing:2px}
+    .logo-dot{width:36px;height:36px;border-radius:8px;background:linear-gradient(90deg,#334155,#0ea5a4);box-shadow:0 6px 20px rgba(14,165,164,0.06)}
+    .title{font-size:18px;letter-spacing:1px;font-weight:500}
+    .subtitle{color:var(--muted);font-size:12px}
+    .tags{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
+    .tag{font-size:11px;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,0.04);background:rgba(255,255,255,0.01)}
+
+    .controls{display:flex;gap:10px}
+    .sound-btn{width:40px;height:40px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center}
+    .btn{background:transparent;border:1px solid var(--border);padding:8px 12px;color:inherit;cursor:pointer}
+    .logo{border:1px solid #555;padding:6px 9px;color:inherit;font-weight:bold;background:transparent;text-decoration:none}
+    .logo::before{content:'$ ';color:#888}
+
+    .stats{display:flex;gap:18px;align-items:center;color:var(--muted);font-size:13px}
+
+    main{display:grid;grid-template-columns:1fr;gap:18px}
+
+    /* left legend */
+    .legend{background:rgba(255,255,255,0.01);border:1px solid var(--border);padding:16px;border-radius:8px}
+    .legend h3{margin:0 0 8px 0}
+    .legend-list{display:flex;flex-direction:column;gap:8px}
+    .legend-item{display:flex;align-items:center;gap:10px}
+    .swatch{width:14px;height:14px;border-radius:3px;border:1px solid rgba(255,255,255,0.04)}
+
+    /* tier area */
+    .tiers{display:flex;flex-direction:column;gap:14px}
+    .tier{display:grid;grid-template-columns:160px 1fr;gap:12px;padding:12px;border-radius:8px;border:1px solid var(--border);background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005))}
+    .tier-label{display:flex;flex-direction:column;justify-content:center;padding:6px 10px;border-right:1px dashed rgba(255,255,255,0.03)}
+    .tier-name{font-size:16px;margin-bottom:6px}
+    .tier-value{font-size:12px;color:var(--muted)}
+
+    .tier-body{padding:10px;display:flex;flex-wrap:wrap;gap:14px;min-height:100px;align-content:flex-start}
+    .user{width:140px;padding:12px;border-radius:10px;background:linear-gradient(180deg, rgba(255,255,255,0.015), rgba(0,0,0,0.06));display:flex;flex-direction:column;align-items:center;gap:10px;border:1px solid rgba(255,255,255,0.03);cursor:grab;transition:transform .14s ease,box-shadow .16s ease,opacity .12s ease}
+    .user.dragging{opacity:.55}
+    .user:hover{transform:translateY(-6px) scale(1.02);box-shadow:0 18px 50px rgba(0,0,0,0.65)}
+    .avatar{width:80px;height:80px;border-radius:50%;overflow:hidden;border:3px solid rgba(255,255,255,0.06)}
+    .avatar img{width:100%;height:100%;object-fit:cover;display:block}
+    .uname{font-size:14px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#ffffff;text-shadow:0 0 10px rgba(255,255,255,0.08),0 0 20px rgba(0,0,0,0.5)}
+    .uid{display:none}
+
+    /* drop indicator */
+    .tier.drop-hover{outline:2px dashed rgba(255,255,255,0.04);box-shadow:0 6px 30px rgba(0,0,0,0.6)}
+    .placeholder{width:92px;height:72px;border:2px dashed rgba(255,255,255,0.03);border-radius:8px}
+
+    /* responsive */
+    @media (max-width:900px){main{grid-template-columns:1fr;}.legend{order:2}.tiers{order:1}}
+  </style>
+</head>
+<body>
+  <!-- Background media removed; using invisible background audio -->
+  <audio id="bgAudio" loop crossorigin="anonymous" preload="auto">
+    <source src="https://drive.google.com/uc?export=download&id=14nBe56aVLpaJiQQMcbVWGJW-XHcs8cnw" type="audio/mpeg">
+    <!-- Using the provided Google Drive file (direct-download URL). If playback fails, ensure the file is shared publicly. -->
+  </audio>
+  <div class="wrap">
+    <header class="app">
+      <div class="brand">
+        <div class="big-letter">T</div>
+        <div>
+          <div class="title">Tierlist</div>
+          <div class="subtitle">The official ranking, by Discord identity. Placement is final and beyond appeal.</div>
+          
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px">
+        <div class="stats"><span id="totalUsers">0 users</span></div>
+          <div class="controls">
+              <a class="logo" href="index.html">Home</a>
+          </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="tiers" id="tiers"></section>
+    </main>
+  </div>
+
+  <script>
+    // Using Spotify embed for audio playback; native <audio> removed.
+    // Attempt to use provided Discord message link as background video; fall back if it fails
+    // Background audio: try to autoplay, fall back to play on first user interaction
+    (function(){
+      const a = document.getElementById('bgAudio');
+      if(!a) return;
+      function tryPlay(){ a.play().catch(()=>{}); }
+      // attempt immediately
+      tryPlay();
+      // if blocked, play on first user gesture
+      function onGesture(){ tryPlay(); document.removeEventListener('pointerdown', onGesture); document.removeEventListener('keydown', onGesture); }
+      document.addEventListener('pointerdown', onGesture);
+      document.addEventListener('keydown', onGesture);
+    })();
+    /***** Data (source of truth) *****/
+    // tiers: top -> bottom. Renamed Divine -> Z and added D under C
+    const tiers = [
+      { id:'z', name:'Z', value:1000, color:'#ffd166' },
+      { id:'s', name:'S', value:900, color:'#ff6b6b' },
+      { id:'a', name:'A', value:800, color:'#ffb86c' },
+      { id:'b', name:'B', value:700, color:'#89ddff' },
+      { id:'c', name:'C', value:600, color:'#50fa7b' },
+      { id:'d', name:'D', value:500, color:'#c084fc' }
+    ];
+
+    // mapping of tier id -> display tag (replaces numeric value in UI)
+    const tierTags = { z:'Jewish', s:'Handlers', a:'Dealers', b:'Gamblers', c:'Ik Rig', d:'120fps' };
+
+    const users = [
+      { name:'Dicey', discordId:'1159958169200627816', avatar:'https://picsum.photos/seed/a/200', tierId:'s' },
+      { name:'Cucoda', discordId:'918724757015384165', avatar:'https://picsum.photos/seed/b/200', tierId:'s' },
+      { name:'farming', discordId:'583332411463565345', avatar:'https://picsum.photos/seed/c/200', tierId:'a' },
+      { name:'Solariath', discordId:'1014263668604670033', avatar:'https://picsum.photos/seed/d/200', tierId:'b' },
+      { name:'Nate(but dumber)', discordId:'414721718985293825', avatar:'https://picsum.photos/seed/e/200', tierId:'c' },
+      { name:'licensed', discordId:'830790856423636992', avatar:'https://cdn.discordapp.com/attachments/1445201270691463208/1535492659353755659/IMG_1370.png?ex=6a7e8dfa&is=6a7d3c7a&hm=8b67fb3cc2487cab77573a830858c8628ceb82f157a1435f3421fd92ac502a89&', tierId:'z' },
+      { name:'Bte', discordId:'1010187661534822531', avatar:'https://cdn.discordapp.com/attachments/1480605879609987177/1537486337341653092/image.png?ex=6a7f373b&is=6a7de5bb&hm=cd73c3f6262738e3d385b7e54157e72f4adb9e3f0973f6ceaf73507626db172f&', tierId:'z' },
+      { name:'Aquila', discordId:'364464878133706753', avatar:'https://cdn.discordapp.com/attachments/1480605879609987177/1537487640008458250/image.png?ex=6a7f3872&is=6a7de6f2&hm=65b89e33be12f74546edb0e3029218935f046c6012ab35657e8d5259723cd8da&', tierId:'s' },
+      { name:'Nate', discordId:'414721718985293825', avatar:'https://cdn.discordapp.com/attachments/1480605879609987177/1537488059317362720/image.png?ex=6a7f38d6&is=6a7de756&hm=4391c4b8bb884d68b9eb8b750264b086374dbf3c7a71250e1c964eb32b07e805&', tierId:'c' }
+    ];
+
+    // Map to hold ordered users per tier
+    let tierUsers = {};
+
+    // Utilities
+    function ensureTierUsers(){
+      tierUsers = {};
+      tiers.forEach(t=> tierUsers[t.id]=[]);
+      users.forEach(u=>{
+        if(!tierUsers[u.tierId]) tierUsers[u.tierId]=[];
+        tierUsers[u.tierId].push(u);
+      });
+    }
+
+    // Initial setup
+    ensureTierUsers();
+
+    // DOM refs
+    const tiersEl = document.getElementById('tiers');
+    const legendList = document.getElementById('legendList');
+    const totalUsersEl = document.getElementById('totalUsers');
+
+    // Render functions
+    function render(){
+      // sort tiers by value desc
+      const sorted = [...tiers].sort((a,b)=>b.value-a.value);
+
+      // legend area removed — keep compatibility if legend element exists
+      const legendList = document.getElementById('legendList');
+      if(legendList){
+        legendList.innerHTML='';
+        sorted.forEach(t=>{
+          const el = document.createElement('div'); el.className='legend-item';
+          const sw = document.createElement('div'); sw.className='swatch'; sw.style.background=t.color;
+          const tagText = tierTags[t.id] || t.value;
+          const txt = document.createElement('div'); txt.innerHTML=`<strong>${t.name}</strong> <div style="font-size:11px;color:var(--muted)">${tagText}</div>`;
+          el.appendChild(sw); el.appendChild(txt); legendList.appendChild(el);
+        });
+      }
+
+      // tiers container
+      tiersEl.innerHTML='';
+      sorted.forEach(t=>{
+        const node = document.createElement('section'); node.className='tier'; node.dataset.tierId=t.id;
+        node.style.setProperty('--tier-color', t.color);
+
+        const label = document.createElement('div'); label.className='tier-label';
+        const name = document.createElement('div'); name.className='tier-name'; name.textContent=t.name;
+        const val = document.createElement('div'); val.className='tier-value';
+        const tagText = tierTags[t.id] || t.value;
+        val.textContent = tagText;
+        label.appendChild(name); label.appendChild(val);
+        label.style.borderLeft = `4px solid ${t.color}`;
+
+        const body = document.createElement('div'); body.className='tier-body'; body.dataset.tierId=t.id;
+
+        body.addEventListener('dragover', e=>{ e.preventDefault(); body.classList.add('drop-hover'); });
+        body.addEventListener('dragleave', e=>{ body.classList.remove('drop-hover'); });
+        body.addEventListener('drop', e=>{ e.preventDefault(); body.classList.remove('drop-hover'); const id=e.dataTransfer.getData('text/plain'); handleDropOnTier(t.id, id); });
+
+        // users for this tier
+        (tierUsers[t.id]||[]).forEach(u=>{
+          const card = createUserCard(u);
+          body.appendChild(card);
+        });
+
+        node.appendChild(label); node.appendChild(body);
+        tiersEl.appendChild(node);
+      });
+
+      totalUsersEl.textContent = users.length + (users.length===1? ' user':' users');
+    }
+
+    function createUserCard(u){
+      const a = document.createElement('a'); a.className='user'; a.href=`https://discord.com/users/${u.discordId}`; a.target='_blank'; a.rel='noopener noreferrer';
+      a.draggable = true; a.dataset.id = u.discordId;
+
+      a.addEventListener('dragstart', e=>{ a.classList.add('dragging'); e.dataTransfer.setData('text/plain', u.discordId); e.dataTransfer.effectAllowed = 'move'; });
+      a.addEventListener('dragend', e=>{ a.classList.remove('dragging'); });
+
+      // enable dropping before/after specific card
+      a.addEventListener('dragover', e=>{ e.preventDefault(); a.style.outline='2px dashed rgba(255,255,255,0.04)'; });
+      a.addEventListener('dragleave', e=>{ a.style.outline='none'; });
+      a.addEventListener('drop', e=>{
+        e.preventDefault(); a.style.outline='none'; const id=e.dataTransfer.getData('text/plain'); handleDropOnCard(u, id);
+      });
+
+      const av = document.createElement('div'); av.className='avatar'; const img=document.createElement('img'); img.src=u.avatar; img.alt=u.name; av.appendChild(img);
+      const name = document.createElement('div'); name.className='uname'; name.textContent=u.name;
+
+      a.appendChild(av); a.appendChild(name);
+      return a;
+    }
+
+    // Drop handlers
+    function handleDropOnTier(targetTierId, discordId){
+      if(!discordId) return;
+      const user = users.find(x=>x.discordId===discordId);
+      if(!user) return;
+      // remove from old tier array
+      Object.keys(tierUsers).forEach(k=>{ tierUsers[k] = tierUsers[k].filter(x=>x.discordId!==discordId); });
+      // add to end of new tier
+      if(!tierUsers[targetTierId]) tierUsers[targetTierId]=[];
+      tierUsers[targetTierId].push(user);
+      user.tierId = targetTierId;
+      render();
+    }
+
+    function handleDropOnCard(targetUser, draggedId){
+      if(!draggedId) return;
+      const dragged = users.find(x=>x.discordId===draggedId);
+      if(!dragged) return;
+      // find target tier array
+      const targetTier = targetUser.tierId;
+      // remove dragged from any tier
+      Object.keys(tierUsers).forEach(k=>{ tierUsers[k] = tierUsers[k].filter(x=>x.discordId!==draggedId); });
+      // insert before target in its tier
+      const arr = tierUsers[targetTier] || [];
+      const idx = arr.findIndex(x=>x.discordId===targetUser.discordId);
+      if(idx===-1) { arr.push(dragged); }
+      else { arr.splice(idx,0,dragged); }
+      dragged.tierId = targetTier;
+      tierUsers[targetTier] = arr;
+      render();
+    }
+
+    // API functions
+    function addTier(id,name,value,color){ if(!id) id = name.toLowerCase(); tiers.push({id,name,value,color}); ensureTierUsers(); render(); }
+    function removeTier(id){ const index = tiers.findIndex(t=>t.id===id); if(index===-1) return; tiers.splice(index,1); delete tierUsers[id]; render(); }
+    function updateTier(id,changes){ const t = tiers.find(x=>x.id===id); if(!t) return; Object.assign(t,changes); render(); }
+
+    function addUser(u){ users.push(u); ensureTierUsers(); render(); }
+    function removeUser(discordId){ const idx = users.findIndex(x=>x.discordId===discordId); if(idx===-1) return; users.splice(idx,1); ensureTierUsers(); render(); }
+    function moveUser(discordId,tierId){ const u = users.find(x=>x.discordId===discordId); if(!u) return; u.tierId=tierId; ensureTierUsers(); render(); }
+
+    // Buttons (guarded in case UI was removed)
+    const addDummyBtn = document.getElementById('addDummy');
+    if(addDummyBtn){
+      addDummyBtn.addEventListener('click', ()=>{
+        const id = String(Date.now()).slice(-12);
+        addUser({ name:'New User', discordId:id, avatar:`https://picsum.photos/seed/${id}/200`, tierId:tiers[tiers.length-1].id });
+      });
+    }
+
+    const exportBtn = document.getElementById('exportBtn');
+    if(exportBtn){
+      exportBtn.addEventListener('click', ()=>{
+        const data = { tiers, users };
+        const blob = new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+        const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href=url; a.download='tierlist-export.json'; a.click(); URL.revokeObjectURL(url);
+      });
+    }
+
+    // initial render
+    render();
+
+    
+
+    // Expose API to window for console use
+    window.tierlistAPI = { addTier, removeTier, updateTier, addUser, removeUser, moveUser };
+  </script>
+</body>
+</html>

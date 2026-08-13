@@ -1,0 +1,883 @@
+/* =========================
+   GLOBAL
+========================= */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 20px;
+    font-family: "Courier New", monospace;
+    font-size: 13px;
+}
+
+
+/* =========================
+   DARK / LIGHT MODE
+========================= */
+
+body.dark-mode {
+    background: #050505;
+    color: #d4d4d4;
+}
+
+body.light-mode {
+    background: #f5f5f5;
+    color: #333;
+}
+
+
+/* =========================
+   LINKS
+========================= */
+
+body.dark-mode a {
+    color: inherit;
+    text-decoration: none;
+}
+
+body.light-mode a {
+    color: inherit;
+    text-decoration: none;
+}
+
+body.dark-mode a:hover {
+    color: white;
+}
+
+body.light-mode a:hover {
+    color: #000;
+}
+
+
+/* =========================
+   MAIN CONTAINER
+========================= */
+
+.site {
+    max-width: 1250px;
+    margin: auto;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+body.dark-mode header {
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #242424;
+    margin-bottom: 10px;
+}
+
+body.light-mode header {
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #d6d6d6;
+    margin-bottom: 10px;
+}
+
+
+/* =========================
+   BUTTON
+========================= */
+
+body.dark-mode button {
+    background: #080808;
+    color: white;
+    border: 1px solid #555;
+    padding: 6px 9px;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+body.light-mode button {
+    background: white;
+    color: #111;
+    border: 1px solid #aaa;
+    padding: 6px 9px;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+body.dark-mode button:hover {
+    opacity: 0.5;
+    cursor: pointer;
+}
+
+body.light-mode button:hover {
+    opacity: 0.5;
+    cursor: pointer;
+}
+
+
+/* =========================
+   LOGO
+========================= */
+
+body.dark-mode .logo {
+    border: 1px solid #555;
+    padding: 6px 9px;
+    color: white;
+    font-weight: bold;
+    background: #080808;
+}
+
+body.light-mode .logo {
+    border: 1px solid #aaa;
+    padding: 6px 9px;
+    color: #111;
+    font-weight: bold;
+    background: white;
+}
+
+body.dark-mode .logo::before {
+    content: "$ ";
+    color: #888;
+}
+
+body.light-mode .logo::before {
+    content: "$ ";
+    color: #888;
+}
+
+
+/* =========================
+   NAVIGATION
+========================= */
+
+nav {
+    display: flex;
+    gap: 25px;
+}
+
+body.dark-mode nav a {
+    color: #999;
+    transition: 0.15s;
+}
+
+body.light-mode nav a {
+    color: #777;
+    transition: 0.15s;
+}
+
+body.dark-mode nav a:hover {
+    color: white;
+}
+
+body.light-mode nav a:hover {
+    color: #111;
+}
+
+body.dark-mode nav a:first-child {
+    color: white;
+}
+
+body.light-mode nav a:first-child {
+    color: #111;
+}
+
+
+/* =========================
+   GRID
+========================= */
+
+body.dark-mode .dashboard {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 1px;
+    background: #222;
+    border: 1px solid #222;
+}
+
+body.light-mode .dashboard {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 1px;
+    background: #d8d8d8;
+    border: 1px solid #d8d8d8;
+}
+
+
+/* =========================
+   PANELS
+========================= */
+
+body.dark-mode .panel {
+    background: #050505;
+    border: 0;
+    padding: 15px;
+    min-width: 0;
+    transition: background 0.15s;
+}
+
+body.light-mode .panel {
+    background: white;
+    border: 0;
+    padding: 15px;
+    min-width: 0;
+    transition: background 0.15s;
+}
+
+body.dark-mode .panel:hover {
+    background: #070707;
+}
+
+body.light-mode .panel:hover {
+    background: #fafafa;
+}
+
+body.dark-mode .panel-title {
+    color: #777;
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+body.light-mode .panel-title {
+    color: #777;
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+body.dark-mode .panel-title::after {
+    content: "";
+    height: 1px;
+    flex: 1;
+    background: #242424;
+}
+
+body.light-mode .panel-title::after {
+    content: "";
+    height: 1px;
+    flex: 1;
+    background: #d6d6d6;
+}
+
+
+/* =========================
+   ABOUT
+========================= */
+
+.about {
+    min-height: 420px;
+}
+
+.about-content {
+    display: flex;
+    gap: 35px;
+}
+
+body.dark-mode .ascii {
+    color: white;
+    font-size: 14px;
+    line-height: 1.05;
+    white-space: pre;
+    width: 100px;
+}
+
+body.light-mode .ascii {
+    color: #222;
+    font-size: 14px;
+    line-height: 1.05;
+    white-space: pre;
+    width: 100px;
+}
+
+.profile {
+    flex: 1;
+}
+
+body.dark-mode .username {
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 28px;
+    border-bottom: 1px solid #444;
+    width: 225px;
+    padding-bottom: 8px;
+}
+
+body.light-mode .username {
+    font-size: 16px;
+    font-weight: bold;
+    color: #111;
+    margin-bottom: 28px;
+    border-bottom: 1px solid #bbb;
+    width: 225px;
+    padding-bottom: 8px;
+}
+
+.info {
+    display: grid;
+    grid-template-columns: 90px 1fr;
+    row-gap: 12px;
+}
+
+body.dark-mode .info-label {
+    color: white;
+}
+
+body.light-mode .info-label {
+    color: #222;
+}
+
+body.dark-mode .info-value {
+    color: #aaa;
+}
+
+body.light-mode .info-value {
+    color: #777;
+}
+
+
+/* =========================
+   BRIGHTNESS BAR
+========================= */
+
+.brightness {
+    margin-top: 25px;
+    height: 13px;
+    display: flex;
+}
+
+.brightness span {
+    flex: 1;
+}
+
+body.dark-mode .brightness span:nth-child(1) {
+    background: #202020;
+}
+
+body.dark-mode .brightness span:nth-child(2) {
+    background: #303030;
+}
+
+body.dark-mode .brightness span:nth-child(3) {
+    background: #555;
+}
+
+body.dark-mode .brightness span:nth-child(4) {
+    background: #777;
+}
+
+body.dark-mode .brightness span:nth-child(5) {
+    background: #999;
+}
+
+body.dark-mode .brightness span:nth-child(6) {
+    background: #bbb;
+}
+
+body.dark-mode .brightness span:nth-child(7) {
+    background: #ddd;
+}
+
+body.light-mode .brightness span:nth-child(1) {
+    background: #222;
+}
+
+body.light-mode .brightness span:nth-child(2) {
+    background: #444;
+}
+
+body.light-mode .brightness span:nth-child(3) {
+    background: #666;
+}
+
+body.light-mode .brightness span:nth-child(4) {
+    background: #888;
+}
+
+body.light-mode .brightness span:nth-child(5) {
+    background: #aaa;
+}
+
+body.light-mode .brightness span:nth-child(6) {
+    background: #ccc;
+}
+
+body.light-mode .brightness span:nth-child(7) {
+    background: #eee;
+}
+
+
+/* =========================
+   FREELANCE
+========================= */
+
+body.dark-mode .freelance {
+    margin-top: 18px;
+    padding-top: 17px;
+    border-top: 1px dashed #292929;
+    color: #aaa;
+}
+
+body.light-mode .freelance {
+    margin-top: 18px;
+    padding-top: 17px;
+    border-top: 1px dashed #ccc;
+    color: #777;
+}
+
+body.dark-mode .freelance a {
+    color: #ddd;
+    text-decoration: underline;
+}
+
+body.light-mode .freelance a {
+    color: #333;
+    text-decoration: underline;
+}
+
+
+/* =========================
+   DISCORD
+========================= */
+
+.discord {
+    min-height: 420px;
+}
+
+body.dark-mode .discord-user {
+    color: white;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+body.light-mode .discord-user {
+    color: #111;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+body.dark-mode .status {
+    float: right;
+    color: #bbb;
+    font-weight: normal;
+}
+
+body.light-mode .status {
+    float: right;
+    color: #777;
+    font-weight: normal;
+}
+
+body.dark-mode .status::before {
+    content: "";
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: #ddd;
+    margin-right: 6px;
+}
+
+body.light-mode .status::before {
+    content: "";
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: #333;
+    margin-right: 6px;
+}
+
+body.dark-mode .discord-card {
+    display: flex;
+    gap: 12px;
+    border-bottom: 1px solid #222;
+    padding-bottom: 18px;
+}
+
+body.light-mode .discord-card {
+    display: flex;
+    gap: 12px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 18px;
+}
+
+body.dark-mode .discord-avatar {
+    width: 52px;
+    height: 52px;
+    background: linear-gradient(135deg, #ddd, #444);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: black;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+body.light-mode .discord-avatar {
+    width: 52px;
+    height: 52px;
+    background: linear-gradient(135deg, #333, #ddd);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.discord-info {
+    flex: 1;
+}
+
+body.dark-mode .activity {
+    color: white;
+    margin-bottom: 7px;
+}
+
+body.light-mode .activity {
+    color: #222;
+    margin-bottom: 7px;
+}
+
+body.dark-mode .activity-description {
+    color: #777;
+    line-height: 1.4;
+}
+
+body.light-mode .activity-description {
+    color: #777;
+    line-height: 1.4;
+}
+
+body.dark-mode .no-activity {
+    color: #555;
+    margin-top: 20px;
+}
+
+body.light-mode .no-activity {
+    color: #aaa;
+    margin-top: 20px;
+}
+
+
+/* =========================
+   LANGUAGE STATS
+========================= */
+
+.languages {
+    min-height: 330px;
+}
+
+.language {
+    display: grid;
+    grid-template-columns: 55px 1fr 50px;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 14px;
+}
+
+body.dark-mode .language-name {
+    color: #ddd;
+}
+
+body.light-mode .language-name {
+    color: #333;
+}
+
+body.dark-mode .bar {
+    height: 12px;
+    background: #292929;
+    position: relative;
+}
+
+body.light-mode .bar {
+    height: 12px;
+    background: #ddd;
+    position: relative;
+}
+
+body.dark-mode .bar-fill {
+    height: 100%;
+    background: #aaa;
+}
+
+body.light-mode .bar-fill {
+    height: 100%;
+    background: #555;
+}
+
+body.dark-mode .hours {
+    text-align: right;
+    color: #aaa;
+}
+
+body.light-mode .hours {
+    text-align: right;
+    color: #777;
+}
+
+body.dark-mode .total {
+    border-top: 1px dashed #292929;
+    margin-top: 20px;
+    padding-top: 16px;
+    display: flex;
+    justify-content: space-between;
+    color: #777;
+}
+
+body.light-mode .total {
+    border-top: 1px dashed #ccc;
+    margin-top: 20px;
+    padding-top: 16px;
+    display: flex;
+    justify-content: space-between;
+    color: #777;
+}
+
+body.dark-mode .total strong {
+    color: white;
+}
+
+body.light-mode .total strong {
+    color: #111;
+}
+
+
+/* =========================
+   FEATURED PROJECT
+========================= */
+
+.projects {
+    min-height: 330px;
+}
+
+body.dark-mode .project {
+    position: relative;
+    height: 290px;
+    overflow: hidden;
+    border: 1px solid #222;
+    background: #111;
+}
+
+body.light-mode .project {
+    position: relative;
+    height: 290px;
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background: #eee;
+}
+
+.project-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.9;
+    filter: grayscale(100%);
+}
+
+body.dark-mode .project-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 15px;
+    background: linear-gradient(
+        transparent,
+        rgba(0, 0, 0, 0.95)
+    );
+}
+
+body.light-mode .project-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 15px;
+    background: linear-gradient(
+        transparent,
+        rgba(255, 255, 255, 0.95)
+    );
+}
+
+body.dark-mode .project-name {
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    margin-bottom: 7px;
+}
+
+body.light-mode .project-name {
+    color: #111;
+    font-size: 15px;
+    font-weight: bold;
+    margin-bottom: 7px;
+}
+
+body.dark-mode .project-description {
+    color: #aaa;
+}
+
+body.light-mode .project-description {
+    color: #555;
+}
+
+body.dark-mode .project-arrow {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #080808;
+    border: 1px solid #333;
+    color: white;
+    transition: 0.15s;
+}
+
+body.light-mode .project-arrow {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    border: 1px solid #aaa;
+    color: #222;
+    transition: 0.15s;
+}
+
+body.dark-mode .project-arrow:hover {
+    background: #222;
+}
+
+body.light-mode .project-arrow:hover {
+    background: #eee;
+}
+
+
+/* =========================
+   BLOG
+========================= */
+
+.blog {
+    min-height: 150px;
+}
+
+body.dark-mode .blog-title {
+    color: white;
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+body.light-mode .blog-title {
+    color: #111;
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+body.dark-mode .blog-meta {
+    color: #888;
+    margin-bottom: 10px;
+}
+
+body.light-mode .blog-meta {
+    color: #888;
+    margin-bottom: 10px;
+}
+
+body.dark-mode .blog-description {
+    color: #aaa;
+    line-height: 1.5;
+}
+
+body.light-mode .blog-description {
+    color: #666;
+    line-height: 1.5;
+}
+
+
+/* =========================
+   NOW WORKING ON
+========================= */
+
+.now {
+    min-height: 150px;
+}
+
+body.dark-mode .now-item {
+    display: flex;
+    gap: 10px;
+    color: #aaa;
+    margin-bottom: 13px;
+}
+
+body.light-mode .now-item {
+    display: flex;
+    gap: 10px;
+    color: #777;
+    margin-bottom: 13px;
+}
+
+body.dark-mode .now-item::before {
+    content: ">";
+    color: white;
+}
+
+body.light-mode .now-item::before {
+    content: ">";
+    color: #222;
+}
+
+body.dark-mode .now-item span {
+    color: white;
+}
+
+body.light-mode .now-item span {
+    color: #111;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 800px) {
+
+    body {
+        padding: 10px;
+    }
+
+    header {
+        height: auto;
+        padding: 10px 0;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    nav {
+        gap: 15px;
+        flex-wrap: wrap;
+    }
+
+    .dashboard {
+        grid-template-columns: 1fr;
+    }
+
+    .about-content {
+        gap: 15px;
+    }
+
+    .ascii {
+        display: none;
+    }
+}

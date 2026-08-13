@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Contact — Niche Lab</title>
+  <style>
+    :root{--bg:#0b0b0b;--panel:rgba(20,20,20,0.75);--accent:#d9b44a;--muted:#bdbdbd}
+    html,body{height:100%;margin:0;font-family:"Old Standard TT", "Courier New", monospace;color:#fff;background:#000}
+    .page-bg{position:fixed;inset:0;background:radial-gradient(ellipse at center, rgba(255,255,255,0.02), transparent 40%), url('assets/background-blur.jpg') center/cover no-repeat;filter:blur(2px) saturate(.7);}
+    .contact-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:40px}
+    .contact-panel{width:760px;max-width:94%;background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(0,0,0,0.35));border:1px solid rgba(255,255,255,0.06);box-shadow:0 20px 60px rgba(0,0,0,0.7);padding:36px;border-radius:6px;backdrop-filter:blur(6px)}
+    .contact-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+    .contact-title{letter-spacing:6px;font-size:20px;color:#fff}
+    .close-x{background:transparent;border:1px solid rgba(255,255,255,0.08);width:36px;height:36px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;color:#fff;text-decoration:none}
+    .contact-note{color:var(--muted);font-size:13px;margin-bottom:12px}
+    form .row{display:flex;gap:12px;margin-bottom:12px}
+    .field{flex:1;display:flex;flex-direction:column}
+    label{font-size:12px;letter-spacing:2px;color:var(--muted);margin-bottom:6px}
+    input[type=text],input[type=email],textarea{background:transparent;border:1px solid rgba(255,255,255,0.08);padding:12px;color:#fff;border-radius:4px;min-height:40px}
+    textarea{min-height:160px;resize:vertical}
+    .actions{display:flex;align-items:center;gap:12px;margin-top:10px}
+    .btn{padding:12px 18px;border-radius:6px;border:0;cursor:pointer;font-weight:600}
+    .btn-primary{background:#fff;color:#111}
+    .btn-ghost{background:transparent;border:1px solid rgba(255,255,255,0.12);color:#fff}
+    .socials{display:flex;gap:10px;margin-top:18px}
+    .socials a{width:36px;height:36px;border-radius:50%;display:inline-grid;place-items:center;border:1px solid rgba(255,255,255,0.08);color:#fff;text-decoration:none}
+    .status{margin-top:10px;font-size:13px;color:var(--muted)}
+    @media(max-width:520px){.contact-panel{padding:18px}.contact-title{font-size:16px}}
+  </style>
+</head>
+<body>
+  <div class="page-bg" aria-hidden></div>
+  <div class="contact-wrap">
+    <div class="contact-panel" role="dialog" aria-labelledby="contactTitle">
+      <div class="contact-header">
+        <div>
+          <div id="contactTitle" class="contact-title">C O N T A C T</div>
+          <div class="contact-note">Alternatively, contact us directly at <strong>inquiry@ccc.actor</strong></div>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <a href="index.html" class="btn-ghost" style="padding:8px 12px;text-decoration:none;color:inherit">HOME</a>
+          <a href="index.html" class="close-x" title="Close">✕</a>
+        </div>
+      </div>
+
+      <form id="contactForm">
+        <div class="row">
+          <div class="field"><label for="name">INQUIRY</label><input id="name" name="name" type="text" placeholder="Your name or handle" /></div>
+          <div class="field" style="max-width:200px"><label for="email">EMAIL</label><input id="email" name="email" type="email" placeholder="optional@email" /></div>
+        </div>
+
+        <div class="row"><div class="field" style="flex:1"><label for="message">MESSAGE</label><textarea id="message" name="message" placeholder="Write your inquiry here..."></textarea></div></div>
+
+        <div class="actions">
+          <button type="submit" id="sendBtn" class="btn btn-primary">SEND INQUIRY</button>
+          <button type="button" id="resetBtn" class="btn btn-ghost">RESET</button>
+          <div class="status" id="statusText"></div>
+        </div>
+      </form>
+
+      <div class="socials" aria-hidden>
+        <a href="#" title="YouTube">▶</a>
+        <a href="#" title="Cloud">☁</a>
+        <a href="#" title="Discord">🛡</a>
+        <a href="#" title="GitHub"></a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // CONFIG: Paste your Discord webhook URL here for quick client-side delivery.
+    // WARNING: Client-side webhooks are visible to anyone who can view your site source.
+    // For production, run a small server endpoint that forwards inquiries to the webhook.
+    const DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/1537470078982033498/zE2he7_sxJ-TRXiY-kacLl0HpI0pc9br5bAfulP6E_s3wtrDdbdGadNC3t7nSkvNRkDg';
+
+    const form = document.getElementById('contactForm');
+    const sendBtn = document.getElementById('sendBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const statusText = document.getElementById('statusText');
+
+    function setStatus(txt, ok){ statusText.textContent = txt; statusText.style.color = ok ? '#b7f0c4' : '#f1b0b0'; }
+
+    resetBtn.addEventListener('click', ()=>{ form.reset(); setStatus('', true); });
+
+    form.addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      const name = document.getElementById('name').value.trim() || 'Anonymous';
+      const email = document.getElementById('email').value.trim();
+      const message = document.getElementById('message').value.trim();
+      if(!message){ setStatus('Please enter a message.', false); return; }
+
+      sendBtn.disabled = true; setStatus('Sending…', true);
+
+      const payloadText = `**New Inquiry**\n**From:** ${name}${email ? ' <' + email + '>' : ''}\n\n${message}`;
+
+      if(DISCORD_WEBHOOK_URL){
+        try{
+          const res = await fetch(DISCORD_WEBHOOK_URL, {
+            method: 'POST', headers: {'Content-Type':'application/json'},
+            body: JSON.stringify({ content: payloadText })
+          });
+          if(res.ok || res.status === 204){ setStatus('Inquiry sent — thanks!', true); form.reset(); }
+          else { setStatus('Failed to send (webhook error).', false); console.error('Webhook send failed', res.status, await res.text()); }
+        }catch(err){ setStatus('Network error sending inquiry.', false); console.error(err); }
+      } else {
+        // Fallback: open mail client with prefilled content (safer than exposing webhook)
+        const subject = encodeURIComponent('Inquiry from ' + name);
+        const body = encodeURIComponent(message + '\n\n---\n' + (email ? 'Reply to: ' + email : ''));
+        window.location.href = `mailto:inquiry@ccc.actor?subject=${subject}&body=${body}`;
+        setStatus('Opening mail client...', true);
+      }
+
+      sendBtn.disabled = false;
+    });
+  </script>
+</body>
+</html>
